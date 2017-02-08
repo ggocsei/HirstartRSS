@@ -1,6 +1,7 @@
 === Hírstart Feed ===
 Contributors: ggocsei
 Tags: RSS, Hirstart.hu
+Donate link: http://paypal.me/ggocsei
 Requires at least: 3.0
 Tested up to: 4.7.2
 License: GPLv2
@@ -10,6 +11,8 @@ RSS Feed a hirstart.hu-hoz
 == Description ==
 A hirstart.hu aggregátor oldal igényeinek megfelelő speciális RSS feed kategória fordítóval.
 Béta!
+
+https://github.com/ggocsei/HirstartRSS
 
 == Installation ==
 Töltsük fel a bővítmény mappáját a WordPress /wp-content/plugins/ mappájába.
