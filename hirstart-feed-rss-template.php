@@ -2,11 +2,11 @@
 /**
  * Template Name: Custom RSS Template - Hírstart
  */
-date_default_timezone_set('Europe/Budapest');
-$timezone = new DateTimeZone('Europe/Budapest');
-$postCount = 20; // The number of posts to show in the feed
-$posts = query_posts('showposts=' . $postCount);
+
 header('Content-Type: '.feed_content_type('rss-http').'; charset='.get_option('blog_charset'), true);
+$postCount = 20; // The number of posts to show in the feed
+query_posts('showposts=' . $postCount);
+
 echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>';
 ?><rss version="2.0"
         xmlns:content="http://purl.org/rss/1.0/modules/content/"
@@ -22,28 +22,41 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>';
         <link><?php bloginfo_rss('url') ?></link>
         <description><?php bloginfo_rss('description') ?></description>
         <lastBuildDate><?php
-        $myDateTime = new DateTime(get_lastpostmodified('GMT'), $timezone);
-        echo $myDateTime->format('D, d M Y H:i:s +0'.($timezone->getOffset($myDateTime)/3600).'00');
+                $gmt_offset = get_option('gmt_offset');
+                $gmt_offset_value = abs($gmt_offset);
+                switch (strlen($gmt_offset_value)) {
+                        case 1:
+                                $gmt_offset_value = '0'.$gmt_offset_value.'00';
+                                break;
+                        case 2:
+                                $gmt_offset_value = $gmt_offset_value.'00';
+                                break;
+                        case 3:
+                                $gmt_offset_value = '0'.$gmt_offset_value.'0';
+                                $gmt_offset_value = str_replace(".","",$gmt_offset_value);
+                                break;
+                        case 4:
+                                $gmt_offset_value = $gmt_offset_value.'0';
+                                $gmt_offset_value = str_replace(".","",$gmt_offset_value);
+                                break;
+                }
+                echo date('D, d M Y H:i:s '.($gmt_offset<0?'-':'+').$gmt_offset_value,strtotime(get_lastpostmodified('GMT')));
         ?></lastBuildDate>
-        <language><?php /*echo get_option('rss_language');*/ ?>hu-HU</language>
+        <language><?php echo get_bloginfo("language"); ?></language>
         <sy:updatePeriod><?php echo apply_filters( 'rss_update_period', 'hourly' ); ?></sy:updatePeriod>
-        <sy:updateFrequency><?php echo apply_filters( 'rss_update_frequency', '1' ); ?></sy:updateFrequency>
+        <sy:updateFrequency><?php echo apply_filters( 'rss_update_frequency', '0' ); ?></sy:updateFrequency>
         <?php do_action('rss2_head'); ?>
         <?php while(have_posts()) : the_post(); ?>
-                <item>
-                        <?
+                <item><?
                         $categories = get_the_category();
                         $categories = json_decode(json_encode($categories), true);
                         $tags = get_the_tags();
                         ?>
                         <title><?php the_title_rss(); ?></title>
                         <link><?php the_permalink_rss(); ?></link>
-                        <pubDate><?php
-                        $myDateTime = new DateTime(get_post_time('Y-m-d H:i:s', true), $timezone);
-                        echo $myDateTime->format('D, d M Y H:i:s +0'.($timezone->getOffset($myDateTime)/3600).'00');
-                        ?></pubDate>
+                        <pubDate><?= get_post_time('D, d M Y H:i:s '.($gmt_offset<0?'-':'+').$gmt_offset_value, false);?></pubDate>
                         <dc:creator><?php bloginfo_rss('name'); ?></dc:creator>
-                        <guid isPermaLink="false"><?php the_guid(); ?></guid>
+                        <guid isPermaLink="false"><?php the_id(); ?></guid>
                         <description><?php the_excerpt_rss(); ?></description>
                         <?php
                         $hirstart_category = array();
@@ -56,7 +69,7 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>';
                         }
                         ?>
                         <?php rss_enclosure(); ?>
-                        <?php do_action('rss2_item'); ?>
+                        <?php do_action('rss2_item');?>
                 </item>
         <?php endwhile; ?>
 </channel>
