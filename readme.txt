@@ -4,6 +4,7 @@ Tags: RSS, Hirstart.hu
 Donate link: http://paypal.me/ggocsei
 Requires at least: 3.0
 Tested up to: 4.7.2
+Stable tag: trunk
 License: GPLv2
 
 RSS Feed a hirstart.hu-hoz
@@ -25,4 +26,4 @@ Hogyan küldhetem el kéréseim, ötleteim, javaslataim a fejlesztőnek?
 A következő címre küldje el levelét: wphirstartfeed {kukac} gocsei {pont} hu.
 
 == Changelog ==
-V 0.1 Start
+v0.1 Start
