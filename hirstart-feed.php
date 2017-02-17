@@ -4,7 +4,7 @@ Plugin Name: Hírstart Feed
 Plugin URI: http://pirin.hu
 Description: RSS Feed a hirstart.hu-hoz
 Author: Gábor Göcsei
-Version: 0.1
+Version: 0.2
 Author URI: http://pirin.hu
 */
 

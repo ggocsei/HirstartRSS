@@ -4,7 +4,7 @@ Tags: RSS, Hirstart.hu
 Donate link: http://paypal.me/ggocsei
 Requires at least: 3.0
 Tested up to: 4.7.2
-Stable tag: trunk
+Stable tag: 0.2
 License: GPLv2
 
 RSS Feed a hirstart.hu-hoz
