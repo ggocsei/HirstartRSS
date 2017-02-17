@@ -3,6 +3,32 @@
  * Template Name: Custom RSS Template - Hírstart
  */
 
+$gmt_offset = get_option('gmt_offset');
+$gmt_offset_value = abs($gmt_offset);
+switch (strlen($gmt_offset_value)) {
+        case 1:
+                $gmt_offset_value = '0'.$gmt_offset_value.'00';
+                break;
+        case 2:
+                $gmt_offset_value = $gmt_offset_value.'00';
+                break;
+        case 3:
+                $gmt_offset_value = '0'.$gmt_offset_value.'0';
+                $gmt_offset_value = str_replace(".","",$gmt_offset_value);
+                break;
+        case 4:
+                $gmt_offset_value = $gmt_offset_value.'0';
+                $gmt_offset_value = str_replace(".","",$gmt_offset_value);
+                break;
+}
+
+$gmt_offset_value = ($gmt_offset<0?'-':'+').$gmt_offset_value;
+$expiresdate = date('D, d M Y H:i:s ',strtotime(get_lastpostmodified('blog'))).$gmt_offset_value;
+
+session_cache_limiter('');
+header('Content-Type: '.feed_content_type('rss-http').'; charset='.get_option('blog_charset'), true);
+header("Cache-Control: private, no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0");
+header("Expires: ".$expiresdate);
 header('Content-Type: '.feed_content_type('rss-http').'; charset='.get_option('blog_charset'), true);
 $postCount = 20; // The number of posts to show in the feed
 query_posts('showposts=' . $postCount);
@@ -21,27 +47,7 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>';
         <atom:link href="<?php self_link(); ?>" rel="self" type="application/rss+xml" />
         <link><?php bloginfo_rss('url') ?></link>
         <description><?php bloginfo_rss('description') ?></description>
-        <lastBuildDate><?php
-                $gmt_offset = get_option('gmt_offset');
-                $gmt_offset_value = abs($gmt_offset);
-                switch (strlen($gmt_offset_value)) {
-                        case 1:
-                                $gmt_offset_value = '0'.$gmt_offset_value.'00';
-                                break;
-                        case 2:
-                                $gmt_offset_value = $gmt_offset_value.'00';
-                                break;
-                        case 3:
-                                $gmt_offset_value = '0'.$gmt_offset_value.'0';
-                                $gmt_offset_value = str_replace(".","",$gmt_offset_value);
-                                break;
-                        case 4:
-                                $gmt_offset_value = $gmt_offset_value.'0';
-                                $gmt_offset_value = str_replace(".","",$gmt_offset_value);
-                                break;
-                }
-                echo date('D, d M Y H:i:s '.($gmt_offset<0?'-':'+').$gmt_offset_value,strtotime(get_lastpostmodified('GMT')));
-        ?></lastBuildDate>
+        <lastBuildDate><?php echo $expiresdate;?></lastBuildDate>
         <language><?php echo get_bloginfo("language"); ?></language>
         <sy:updatePeriod><?php echo apply_filters( 'rss_update_period', 'hourly' ); ?></sy:updatePeriod>
         <sy:updateFrequency><?php echo apply_filters( 'rss_update_frequency', '0' ); ?></sy:updateFrequency>
@@ -54,7 +60,7 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>';
                         ?>
                         <title><?php the_title_rss(); ?></title>
                         <link><?php the_permalink_rss(); ?></link>
-                        <pubDate><?= get_post_time('D, d M Y H:i:s '.($gmt_offset<0?'-':'+').$gmt_offset_value, false);?></pubDate>
+                        <pubDate><?= get_post_time('D, d M Y H:i:s '.$gmt_offset_value, false);?></pubDate>
                         <dc:creator><?php bloginfo_rss('name'); ?></dc:creator>
                         <guid isPermaLink="false"><?php the_id(); ?></guid>
                         <description><?php the_excerpt_rss(); ?></description>
