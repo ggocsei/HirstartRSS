@@ -21,8 +21,12 @@ A post kategóriáknál beállítható a megfelelő HS kategória ami az RSS fee
 A feed elérhető a {odalneve}/feed/hirstart URLen.
 
 == Frequently Asked Questions ==
-Hogyan küldhetem el kéréseim, ötleteim, javaslataim a fejlesztőnek?
-A következő címre küldje el levelét: wphirstartfeed {kukac} gocsei {pont} hu.
+Q: Hogyan küldhetem el kéréseim, ötleteim, javaslataim a fejlesztőnek?
+A: A következő címre küldje el levelét: wphirstartfeed {kukac} gocsei {pont} hu.
+
+Q: Megoldható-e komplex címke-kategória esetleg a sablon saját kiemelései alapján Hírstart kategória összerendelés
+A: Igen, kérem keressen az egyedi megoldási javaslatért.
+
 
 == Changelog ==
 
