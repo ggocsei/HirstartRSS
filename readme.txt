@@ -11,14 +11,13 @@ RSS Feed a hirstart.hu-hoz
 
 == Description ==
 A hirstart.hu aggregátor oldal igényeinek megfelelő speciális RSS feed kategória fordítóval.
-Béta!
 
 https://github.com/ggocsei/HirstartRSS
 
 == Installation ==
 Töltsük fel a bővítmény mappáját a WordPress /wp-content/plugins/ mappájába.
 A vezérlőpulton a Telepített bővítmények oldalon kapcsoljuk be a kiegészítőt.
-A post kategóriáknál beállítható a megfelelő HS kategória.
+A post kategóriáknál beállítható a megfelelő HS kategória ami az RSS feedben fog megjelenni az adott postoknál.
 A feed elérhető a {odalneve}/feed/hirstart URLen.
 
 == Frequently Asked Questions ==
@@ -26,4 +25,9 @@ Hogyan küldhetem el kéréseim, ötleteim, javaslataim a fejlesztőnek?
 A következő címre küldje el levelét: wphirstartfeed {kukac} gocsei {pont} hu.
 
 == Changelog ==
-v0.1 Start
+
+= 0.2 =
+GMT fix in template
+
+= 0.1 =
+Start
