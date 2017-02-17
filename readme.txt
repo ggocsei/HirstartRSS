@@ -4,7 +4,7 @@ Tags: RSS, Hirstart.hu
 Donate link: http://paypal.me/ggocsei
 Requires at least: 3.0
 Tested up to: 4.7.2
-Stable tag: 0.2
+Stable tag: 0.3
 License: GPLv2
 
 RSS Feed a hirstart.hu-hoz
@@ -29,6 +29,11 @@ A: Igen, kérem keressen az egyedi megoldási javaslatért.
 
 
 == Changelog ==
+
+= 0.3 =
+Term meta handling fix
+HS category / Normal category handling fix
+Unnecessary tag request remove
 
 = 0.2 =
 GMT fix in template

@@ -54,9 +54,6 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>';
         <?php do_action('rss2_head'); ?>
         <?php while(have_posts()) : the_post(); ?>
                 <item><?
-                        $categories = get_the_category();
-                        $categories = json_decode(json_encode($categories), true);
-                        $tags = get_the_tags();
                         ?>
                         <title><?php the_title_rss(); ?></title>
                         <link><?php the_permalink_rss(); ?></link>
@@ -65,13 +62,25 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>';
                         <guid isPermaLink="false"><?php the_id(); ?></guid>
                         <description><?php the_excerpt_rss(); ?></description>
                         <?php
+                        $categories = get_the_category();
+                        $categories = json_decode(json_encode($categories), true);
                         $hirstart_category = array();
+                        $original_categories = '';
                         foreach($categories as $k => $v){
-                                $hirstart_category[get_term_meta($v['term_id'], '_hirstart_cat_title', true)] += 1;
+                                $tmp = get_term_meta($v['term_id'], '_hirstart_cat_title', true);
+                                if($tmp){
+                                        $hirstart_category[$tmp] += 1;
+                                } else {
+                                        $original_categories .= '<category>'.$v["name"].'</category>';
+                                }
                         }
-                        $hirstart_category = array_merge(array_flip($hirstart_category));
-                        foreach($hirstart_category as $k => $v){
-                                print "<category>".$v."</category>";
+                        if(count($hirstart_category)){
+                                $hirstart_category = array_merge(array_flip($hirstart_category));
+                                foreach($hirstart_category as $k => $v){
+                                        print "<category>".$v."</category>";
+                                }
+                        } else {
+                                print $original_categories;
                         }
                         ?>
                         <?php rss_enclosure(); ?>

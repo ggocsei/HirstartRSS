@@ -4,7 +4,7 @@ Plugin Name: Hírstart Feed
 Plugin URI: http://pirin.hu
 Description: RSS Feed a hirstart.hu-hoz
 Author: Gábor Göcsei
-Version: 0.2
+Version: 0.3
 Author URI: http://pirin.hu
 */
 
@@ -23,7 +23,7 @@ function hirstartfeedtemplate(){
 }
 
 function addHirstartCategoryToCat(){
-    $hirstart_cat_title = get_term_meta($_POST['tag_ID'], '_hirstart_cat_title', true);
+    $hirstart_cat_title = get_term_meta($_REQUEST['tag_ID'], '_hirstart_cat_title', true);
     ?>
     <tr class="form-field">
         <th scope="row" valign="top"><label for="hirstart_cat_title"><?php _e('Hírstart kategória'); ?></label></th>
